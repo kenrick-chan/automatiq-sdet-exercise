@@ -14,7 +14,7 @@ on:
         # Input has to be provided for the workflow to run
         required: true
         # The data type of the input
-        type: string
+        type: string     
       city:
         description: 'Enter City'
         required: true
@@ -39,9 +39,7 @@ jobs:
     - name: Run k6
       uses: grafana/run-k6-action@v1
       env: 
-        GOOGLE_API_KEY: ${{ inputs.key }}
+        GOOGLE_API_KEY: ${{ secrets.key }}
         LOCATION: ${{ inputs.city }}
       with:
-        path: ./
-      
-    - run: echo "Hello ${{ inputs.name }}"
+        path: ./sdet_geocode-api-test.js
