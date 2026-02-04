@@ -8,25 +8,40 @@ on:
   workflow_dispatch:
     # Inputs the workflow accepts.
     inputs:
-      name:
+      key:
         # Friendly description to be shown in the UI instead of 'name'
-        description: 'Person to greet'
-        # Default value if no value is explicitly provided
-        default: 'World'
+        description: 'Google API Key'
         # Input has to be provided for the workflow to run
         required: true
         # The data type of the input
+        type: string
+      city:
+        description: 'Enter City'
+        required: true
         type: string
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "greet"
-  greet:
+  run-k6-script:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Runs a single command using the runners shell
-    - name: Send greeting
-      run: echo "Hello ${{ inputs.name }}"
+    - name: Checkout
+      uses: actions/checkout@v4
+    
+    - name: Setup k6
+      uses: grafana/setup-k6-action@v1
+
+    - name: Run k6
+      uses: grafana/run-k6-action@v1
+      env: 
+        GOOGLE_API_KEY: ${{ inputs.key }}
+        LOCATION: ${{ inputs.city }}
+      with:
+        path: ./
+      
+    - run: echo "Hello ${{ inputs.name }}"
