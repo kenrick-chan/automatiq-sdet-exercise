@@ -42,4 +42,4 @@ jobs:
         GOOGLE_API_KEY: ${{ secrets.key }}
         LOCATION: ${{ inputs.city }}
       with:
-        path: ./sdet_geocode-api-test.js
+        path: ./sdet_geocode_api_test.js
