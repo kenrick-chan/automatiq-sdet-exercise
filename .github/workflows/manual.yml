@@ -38,7 +38,7 @@ jobs:
 
     - name: Obscure API Key
       run: |
-        API_KEY=$( cat $GITHUB_EVENT_PATH | jq -r 'inputs.key')
+        API_KEY=$( cat $GITHUB_EVENT_PATH | jq -r '.inputs.key')
         echo "::add-mask::$API_KEY"
 
     - name: Run k6
