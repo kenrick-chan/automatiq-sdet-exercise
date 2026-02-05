@@ -36,15 +36,17 @@ jobs:
     - name: Setup k6
       uses: grafana/setup-k6-action@v1
 
-    - name: Obscure API Key
+    - id: obscure-key-step
+      name: Obscure API Key
       run: |
         API_KEY=$( cat $GITHUB_EVENT_PATH | jq -r '.inputs.key')
         echo "::add-mask::$API_KEY"
+        echo "input-key=$API_KEY" >> "$GITHUB_OUTPUT"
 
     - name: Run k6
       uses: grafana/run-k6-action@v1
       env: 
-        GOOGLE_API_KEY: $API_KEY
+        GOOGLE_API_KEY: ${{ steps.obscure-key-step.outputs.input-key }}
         LOCATION: ${{ inputs.city }}
       with:
         path: ./sdet_geocode_api_test.js
