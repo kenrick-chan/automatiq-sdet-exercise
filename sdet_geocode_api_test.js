@@ -9,13 +9,14 @@ const options = {
       iterations:1
     }
   },
+  url: 'https://maps.googleapis.com/maps/api/geocode/json',
   apiKey: __ENV.GOOGLE_API_KEY,
   location: __ENV.LOCATION
 }
 
 export default function () {
-  console.log(`https://maps.googleapis.com/maps/api/geocode/json?key=${options.apiKey}&address=${options.location}`)
-  let res = http.get(`https://maps.googleapis.com/maps/api/geocode/json?key=${options.apiKey}&address=${options.location}`);
+  console.log(`${options.url}?address=${options.location}&key=${options.apiKey}`)
+  let res = http.get(`${options.url}?address=${options.location}&key=${options.apiKey}`);
   check(res, { "status is 200": (res) => res.status === 200 });
   console.log(res.body);
   let data = res.json();

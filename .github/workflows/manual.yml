@@ -39,7 +39,7 @@ jobs:
     - name: Run k6
       uses: grafana/run-k6-action@v1
       env: 
-        GOOGLE_API_KEY: ${{ secrets.key }}
+        GOOGLE_API_KEY: ::add-mask::${{ inputs.key }}
         LOCATION: ${{ inputs.city }}
       with:
         path: ./sdet_geocode_api_test.js
