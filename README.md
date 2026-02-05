@@ -2,17 +2,17 @@
 
 ## How to run
 1. On the repo page, click on the 'Actions' tab
-2. Under the Actions sidebar, look for the 'Manual workflow' job and click
-3. Once you're taken to the Manual workflow job page, in the table there is a dropdown to 'Run workflow'. Click that
-4. Use: 
-    a. Use workflow from: `branch: main`
-    b. Google API Key: `your-google-api-key`
-    c. Enter City: `city-of-your-choice` (not tested to use a city outside of the US nor invalid inputs)
-5. Click 'Run workflow' to create the job and run the Github action
-6. Refresh the page the get the new job to show up
-7. Click on the job to view the run
-8. Expand `Run k6` task
-9. City, Lat, and Lng is console.log()'d above the TOTAL RESULTS line
+2. Under the Actions sidebar, find and click 'Manual workflow' job
+3. Once you're taken to the Manual workflow job page, in the main section click 'Run workflow' for a dropdown.
+4. Use:
+    - Use workflow from: `branch: main`
+    - Google API Key: `your-google-api-key`
+    - Enter City: `city-of-your-choice`
+6. Click 'Run workflow' to create the job and run the Github action
+7. Refresh the page the get the new job to show up
+8. Click on the job to view the run
+9. Expand `Run k6` task
+10. The City, Lat, and Lng will be console.log()'d above the TOTAL RESULTS line
 
 ## Checklist of tasks:
 - [x] Create a basic k6 API Testing Framework in Typescript
