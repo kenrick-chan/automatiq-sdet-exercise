@@ -14,20 +14,25 @@ const options = {
   location: __ENV.LOCATION
 }
 
+type responseObj = {
+  city: string;
+  lat: string;
+  lng: string;
+};
+
 export default function () {
-  console.log(`${options.url}?address=${options.location}&key=${options.apiKey}`)
   let res = http.get(`${options.url}?address=${options.location}&key=${options.apiKey}`);
   check(res, { "status is 200": (res) => res.status === 200 });
-  console.log(res.body);
-  let data = res.json();
+  const resJsonString = JSON.stringify(res.json());
+  const resJsonObj = JSON.parse(resJsonString);
   
-  const objData = {
-    city: data.results[0].address_components[0].long_name,
-    lat: data.results[0].geometry.location.lat,
-    lng: data.results[0].geometry.location.lng
-  }
-  
+  const objData: responseObj= {
+    city: resJsonObj.results[0].address_components[0].long_name,
+    lat: resJsonObj.results[0].geometry.location.lat,
+    lng: resJsonObj.results[0].geometry.location.lng
+  };
+
   for (let key in objData) {
     console.log( `${key}: ${objData[key]}`)
-  }
+  };
 }
