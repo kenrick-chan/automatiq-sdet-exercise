@@ -1,53 +1,40 @@
-# This is a basic workflow that is manually triggered
-
 name: Manual workflow
 
-# Controls when the action will run. Workflow runs when manually triggered using the UI
-# or API.
 on:
   workflow_dispatch:
-    # Inputs the workflow accepts.
     inputs:
       key:
-        # Friendly description to be shown in the UI instead of 'name'
         description: 'Google API Key'
-        # Input has to be provided for the workflow to run
         required: true
-        # The data type of the input
         type: string     
       city:
         description: 'Enter City'
         required: true
         type: string
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "greet"
   run-k6-script:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Runs a single command using the runners shell
+    # Checkout `main` branch
     - name: Checkout
       uses: actions/checkout@v4
-    
+    # Setup env with K6
     - name: Setup k6
       uses: grafana/setup-k6-action@v1
-
+    # Obscure user's Google API Key
     - id: obscure-key-step
       name: Obscure API Key
       run: |
         API_KEY=$( cat $GITHUB_EVENT_PATH | jq -r '.inputs.key')
         echo "::add-mask::$API_KEY"
         echo "input-key=$API_KEY" >> "$GITHUB_OUTPUT"
-
+    # Run K6 script
     - name: Run k6
       uses: grafana/run-k6-action@v1
       env: 
         GOOGLE_API_KEY: ${{ steps.obscure-key-step.outputs.input-key }}
         LOCATION: ${{ inputs.city }}
       with:
-        path: ./sdet_geocode_api_test.js
+        path: ./sdet_geocode_api_test.ts
 
