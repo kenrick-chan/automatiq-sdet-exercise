@@ -17,6 +17,7 @@ export default function () {
   console.log(`https://maps.googleapis.com/maps/api/geocode/json?key=${options.apiKey}&address=${options.location}`)
   let res = http.get(`https://maps.googleapis.com/maps/api/geocode/json?key=${options.apiKey}&address=${options.location}`);
   check(res, { "status is 200": (res) => res.status === 200 });
+  console.log(res.body);
   let data = res.json();
   
   const objData = {
